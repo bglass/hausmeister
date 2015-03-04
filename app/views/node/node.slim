@@ -1,0 +1,44 @@
+h2 = @nid.summary
+
+table
+  - @nid.data.each do |k, v|
+    tr
+      td = k
+      td &nbsp;&nbsp;
+      td = v
+
+- if @nid.parent
+  h3 Parent
+  ul
+    li = node_link(@nid.parent)
+
+- if @nid.has_children?
+  h3 Children
+  ul
+    - @nid.children.each do |c|
+      li = node_link(c)
+
+- if @nid.has_reference?
+  h3 Reference
+  ul
+    li = node_link(@nid.reference)
+
+- if @nid.has_links?
+  h3 Links
+  ul
+    - @nid.links.each do |l|
+      li = node_link(l)
+
+- backlinks = @nid.backlinks
+- if backlinks.length > 0
+  h3 Backlinks
+  ul
+  - backlinks.each do |l|
+    li = node_link(l)
+
+- referers = @nid.referers
+- if referers.length > 0
+  h3 Referers
+  ul
+  - referers.each do |l|
+    li = node_link(l)

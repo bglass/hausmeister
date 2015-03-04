@@ -1,0 +1,25 @@
+- @node
+h2 Device Instance
+
+table
+  - device_instance(@node).each do |k, v|
+    tr
+      td = k
+      td = "&nbsp;&nbsp;".html_safe
+      td = v
+
+h3 Communication Objects
+
+ul
+  - device_comobjects(@node).sort_by{|c,d| c}.each do |channel,data|
+    li = channel
+    table
+      - data.sort_by{|f| f[:objectnum].to_i}.each do |f|
+        tr
+          td = f.delete(:objectnum)
+          td = "&nbsp;&nbsp;".html_safe
+          td = f.delete(:Function)
+          td = "&nbsp;&nbsp;".html_safe
+          td = f.length>0 ? f : ""
+
+    hr

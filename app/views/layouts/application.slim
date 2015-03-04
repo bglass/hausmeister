@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title= @title
+    = stylesheet_link_tag '/assets/application'
+    = javascript_include_tag  '/assets/application'
+
+body
+  ul
+    - @menu.each do |page|
+      li: a = link_to(page.capitalize, uri(url(page.to_s)))
+
+  == yield

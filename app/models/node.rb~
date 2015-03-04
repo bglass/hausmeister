@@ -1,0 +1,144 @@
+class Node
+
+  attr_reader :data
+
+  @@node    = []
+  @@type    = {}
+  @@reftype = {}
+  @@refid   = {}
+  @@globalid = -1
+
+  #=======================================================================
+
+  def initialize(id,element,parent_id)
+    name = element.name.capitalize
+
+    @data = {}
+    element.attributes.each {|k,v| @data[k]=v}   # convert REXML::attributes to Hash
+
+    @data['xId']     = id
+    @data['xType']   = name
+    @data['xParent'] = parent_id
+    @@node[id] = self
+    @@type[name] = true
+
+    # register all Ids as reference target
+    if @data['Id'] then add_refid(@data['Id'], id) end
+
+    # (1) create reference method, and
+    # (2) register type of reference
+    if references = element.attributes.keys.find_all { |k| k.include?('RefId') }
+      if !@@reftype[name] then  @@reftype[name] = {} end
+      references.each do |ref|   
+        create_reference_method(name,ref)    # (1)
+        @@reftype[name][ref] = true          # (2)
+      end
+    end
+  end
+
+  #=======================================================================
+
+  def self.types()    @@type.keys       end
+
+  def self.type_unknown?(name)
+    !Object.const_defined?(name)
+  end
+  
+  def self.create_subclass(name)
+#    Object.const_set(name, Class.new(Node) {def initialize() end} )
+    Object.const_set(name, Class.new(Node) )
+  end
+    
+  def self.import(element, parent_id=nil)
+    @@globalid += 1
+    this_id = @@globalid
+
+    name = element.name.capitalize
+
+#    if Object.const_defined?(name)
+#      puts "WARNING: #{name} collides with program namespace"
+#      puts "RENAMED to  KNX#{name}."
+#      name = "KNX_"+name
+#    end
+
+    if Node.type_unknown?(name)
+      Node.create_subclass(name)
+    end
+
+    Kernel.const_get(name).new(this_id, element, parent_id)    # create object
+
+    element.each_element { |e| import(e, this_id) }
+  end
+
+  def self.reftypes
+    reftypes = []
+    @@reftype.each do |rtype, h|      
+      if !h.keys.empty?
+        h.each do |refid, x|          
+          reftypes << [rtype, refid]
+        end
+      end
+    end    
+    reftypes
+  end
+
+  def self.all( name = nil )    
+
+    if self.name != "Node" then   name = self.name  end
+    if !name 
+      @@node
+    else
+      @@node.select { |n| n.data['xType'] == name }
+    end
+  end
+
+  def self.first
+    if self.name == "Node"
+      @@node.first
+    else
+      @@node.select { |n| n.data['xType'] == self.name }.first
+    end
+  end
+
+  def self.xid2node(xid)
+    @@node[xid]
+  end
+
+  def self.refid2node(ref)
+    @@refid[ref]
+  end
+
+  #=======================================================================
+
+  def children()      @@node.select { |n|  n.data['xParent'] == self.data['xId'] }   end
+
+  def add_refid(ref, refid)
+    @@refid[ref] = refid
+  end
+
+
+  def parent
+    if self.data['xParent']
+      @@node[ self.data['xParent'].to_i ]
+    else
+      nil
+    end
+  end
+
+  def refnode(reftype)
+    refid = @@refid[self.data[reftype]]
+    if refid
+      @@node[refid]
+    else
+      nil     # this node is not in our database
+    end
+  end
+
+  def create_reference_method(classname,referencename)
+    methodname = referencename.gsub(/RefId\Z/,'').downcase
+    methodname = "reference" if methodname == ""  
+    Object.const_get(classname).send :define_method, methodname do
+      self.refnode(referencename)
+    end      
+  end
+end

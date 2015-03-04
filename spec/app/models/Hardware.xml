@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<KNX xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CreatedBy="ETS4" ToolVersion="ETS 4.2.0 (Build 3884)" xmlns="http://knx.org/xml/project/11">
+  <ManufacturerData>
+    <Manufacturer RefId="M-0002">
+      <Hardware>
+        <Hardware Id="M-0002_H-2CDG110061R0011-1" Name="IPR/S2.1 IP-Router" SerialNumber="2CDG110061R0011" VersionNumber="1" BusCurrent="1.0000000e+001" IsAccessory="0" HasIndividualAddress="1" HasApplicationProgram="1" HasApplicationProgram2="0" IsPowerSupply="0" IsChoke="0" IsCoupler="1" IsPowerLineRepeater="0" IsPowerLineSignalFilter="0" IsCable="0" NonRegRelevantDataVersion="0" IsIPEnabled="0">
+          <Products>
+            <Product Id="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Text="IPR/S2.1 IP Router,MDRC" OrderNumber="2CDG 110 061 R0011" IsRailMounted="1" WidthInMillimeter="3.6000000e+001" DefaultLanguage="en-US" Hash="wTAqkycgg2pU6pIokJACnqGnR8k=" NonRegRelevantDataVersion="0">
+              <Attributes>
+                <Attribute Id="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011_AT-Series" Name="Series" Value="proM" />
+              </Attributes>
+              <RegistrationInfo RegistrationStatus="Registered" RegistrationSignature="ilhal3MeyFr5pE/mMWpl+30JXBzGtzs1Znu0RLZhG9YUbjiVfSFrY56vnLGOxvmh+XmtWKzG2/AsC6pcP4caSMYyFAe0hz1/Z4LBEO60ncBzgpVJ+BNFvU/7Ju+6eiXKCX4VZ2UX3zdDn/fnjAeY5CyGBQyz5UODmMESeU2SCvM=" />
+            </Product>
+          </Products>
+          <Hardware2Programs>
+            <Hardware2Program Id="M-0002_H-2CDG110061R0011-1_HP-A035-10-5195" MediumTypes="MT-0" Hash="e4+bDPJUt51Iqc+Sb5wW6Oj+/Qg=">
+              <ApplicationProgramRef RefId="M-0002_A-A035-10-5195" />
+              <RegistrationInfo RegistrationSignature="EWVfv2IR3xX+zVf2R012a93Ia8Jl4QLZWP7dO2DWZZ8jqWiJywJ/56aQfjQKGJ4F8tIQY/W1j/U+Q1DEGJIeJQfpQar99RSh+eqpYlzIgxUyD7mgyaVI3VR8w8KTCH7vByxAyXyRuep4gMLiY5f8vlxBuICVAUvfX15qsP0aWAI=" OriginalRegistrationNumber="1900/0" RegistrationNumber="2008/8467" RegistrationStatus="Registered" />
+            </Hardware2Program>
+          </Hardware2Programs>
+        </Hardware>
+        <Hardware Id="M-0002_H-7.2F.2F6179-3-O0007" Name="6179 Bewegungsmelder BW220-EIB" SerialNumber="7//6179" VersionNumber="3" BusCurrent="1.0000000e+001" IsAccessory="0" HasIndividualAddress="1" HasApplicationProgram="1" HasApplicationProgram2="0" IsPowerSupply="0" IsChoke="0" IsCoupler="0" IsPowerLineRepeater="0" IsPowerLineSignalFilter="0" IsCable="0" OriginalManufacturer="M-0007" NonRegRelevantDataVersion="0" IsIPEnabled="0">
+          <Products>
+            <Product Id="M-0002_H-7.2F.2F6179-3-O0007_P-6179.20AGM.2D500" Text="6179 AGM-500 Watchdog sensor 220°,SM" OrderNumber="6179 AGM-500" IsRailMounted="0" DefaultLanguage="en-US" Hash="vdPZunTCxBEv7xSCLHTuxWmqD50=" NonRegRelevantDataVersion="0">
+              <RegistrationInfo RegistrationStatus="Unregistered" />
+            </Product>
+          </Products>
+          <Hardware2Programs>
+            <Hardware2Program Id="M-0002_H-7.2F.2F6179-3-O0007_HP-6179-11-52CE-O0007" MediumTypes="MT-0" Hash="unZYh6gZoGpEL4IuCHpL6kGisQ8=">
+              <ApplicationProgramRef RefId="M-0002_A-6179-11-52CE-O0007" />
+              <RegistrationInfo RegistrationSignature="UsPp0m+wgoIJu5nHbUfNQ9mfZsrHucEO80RW1rqpGYcY52JWLqA91SVlmTfAHgft2Wioo3k6GBU1ugA4g++z89vVpKOxNNSJmWQk6tMYuiPwmo3WVR3x0LSEa3iQyU9vPZsTWwq8iEL8g/OCfGdV0uFhJlLu2Au5dPfkXSNBV+o=" OriginalRegistrationNumber="2006/7368" RegistrationNumber="2006/7370" RegistrationStatus="Registered" />
+            </Hardware2Program>
+          </Hardware2Programs>
+        </Hardware>
+      </Hardware>
+      <Languages>
+        <Language Identifier="de-DE">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 IP-Router,REG" />
+            </TranslationElement>
+          </TranslationUnit>
+          <TranslationUnit RefId="M-0002_H-7.2F.2F6179-3-O0007_P-6179.20AGM.2D500" Version="0">
+            <TranslationElement RefId="M-0002_H-7.2F.2F6179-3-O0007_P-6179.20AGM.2D500">
+              <Translation AttributeName="Text" Text="6179 AGM-500 Bewegungsmelder 220°,AP" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="en-US">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 IP Router,MDRC" />
+            </TranslationElement>
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011_AT-Series">
+              <Translation AttributeName="Value" Text="proM" />
+            </TranslationElement>
+          </TranslationUnit>
+          <TranslationUnit RefId="M-0002_H-7.2F.2F6179-3-O0007_P-6179.20AGM.2D500" Version="0">
+            <TranslationElement RefId="M-0002_H-7.2F.2F6179-3-O0007_P-6179.20AGM.2D500">
+              <Translation AttributeName="Text" Text="6179 AGM-500 Watchdog sensor 220°,SM" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="es-ES">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 Router IP,MDRC" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="fr-FR">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 Routeur IP,MRD" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="it-IT">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 IP-Router, MDRC" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="nl-NL">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 IP router,MDRC" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="pl-PL">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 router IP,REG" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+        <Language Identifier="ru-RU">
+          <TranslationUnit RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011" Version="0">
+            <TranslationElement RefId="M-0002_H-2CDG110061R0011-1_P-2CDG.20110.20061.20R0011">
+              <Translation AttributeName="Text" Text="IPR/S2.1 IP маршрутизатор, MDRC" />
+            </TranslationElement>
+          </TranslationUnit>
+        </Language>
+      </Languages>
+    </Manufacturer>
+  </ManufacturerData>
+</KNX>

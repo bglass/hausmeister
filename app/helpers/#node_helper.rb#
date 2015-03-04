@@ -1,0 +1,71 @@
+
+# Helper methods defined here can be accessed in any controller or view in the application
+
+module Knxbrowse
+  class App01
+    module NodeHelper
+
+      def node_data
+
+        this_node = Node.xid2node(@xid)
+        
+        if (pnode = this_node.parent)
+          parent_xid = pnode.xid 
+        end
+
+        if parent_xid
+          label = node_summary(parent_xid)
+          url   = url_for(:node, :id => parent_xid)
+          plabel = link_to(label, url )
+        else
+          plabel = '-'
+        end
+
+        name = this_node.data['Name']
+
+        display = {}
+        display['Parent'] = plabel
+        display['Name']   = name if name
+        display['Type']   = this_node.head['xType']
+        this_node.data.each do |k, value|
+
+          if /RefId\Z/ =~ k
+            refname = k.gsub(/RefId\Z/,'')
+            refname = "Reference" if refname.empty?
+            if rid = Node.refid2xid(value)
+              label = node_summary( rid )
+              url   = url_for(:node, :id => rid)
+              display[refname] = link_to(label, url )
+            else
+              display[refname] = value + " (not available)"
+            end
+            
+          else
+           label = k.underscore.humanize
+           display[label] = value
+          end
+        end
+        display
+      end
+      
+      def node_children
+        children = Node.xid2node(@xid).children
+        children.map! { |child|  child.xid }
+        children.map! do |cid|  
+          label = node_summary(cid)
+          url   = url_for(:node, :id => cid)
+          link_to(label, url )
+        end
+      end
+
+ 
+      def node_summary(id=nil)
+        id = @xid if !id
+        Node.xid2node(id).summary
+      end
+
+    end
+
+    helpers NodeHelper
+  end
+end

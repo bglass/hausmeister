@@ -1,0 +1,22 @@
+h2 = @title
+
+
+ul
+  li CV parameters
+  canvas#gauge1
+  canvas#gauge2
+  canvas#gauge3
+  canvas#gauge4
+
+  li Tempgraphs: soll,ist,stell over time
+  canvas#graph1
+
+- setpoint = (15..25).map{|x|x}
+- actual   = setpoint.reverse
+- valve    = (0..100).step(10).map{|x|x}
+
+javascript: cv_pressure_gauge("gauge1",130)
+javascript: cv_pressure_gauge("gauge2",160)
+javascript: cv_pressure_gauge("gauge3",160)
+javascript: cv_pressure_gauge("gauge4",130)
+javascript: heating_circuits_graph("graph1", 600, 150, "#{setpoint}", "#{actual}", "#{valve}")
