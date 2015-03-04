@@ -136,81 +136,94 @@ class Index
 
   # String
   def name
-    text = table.where(idx: @idx).pluck(:Name).first if table.column?("Name")
+    table.where(idx: @idx).pluck(:Name).first if table.column?("Name")
+  end
+
+  # String
+  def text
+    table.where(idx: @idx).pluck(:Text).first if table.column?("Text")
+  end
+
+  # String
+  def function_text
+    table.where(idx: @idx).pluck(:FunctionText).first if table.column?("FunctionText")
+  end
+
+  # String
+  def address
+    table.where(idx: @idx).pluck(:Address).first if table.column?("Address")
   end
 
   # Hash {column => value}
   def data
     node.data
   end
+# end
+#
+#
+# class DeviceInstance < Index
+
+  def di__com_object_instance_ref
+    coirefs = children.select{|x| x.table.name == "EtsComObjectInstanceRefs"}
+    if coirefs.length == 1
+      c = coirefs.first.children
+      c.first.table.name == "EtsComObjectInstanceRef" ? c : []
+    elsif coirefs.length == 0
+      []
+    else
+      binding.pry   #DBG, should not happen
+    end
+  end
+# end
+#
+# class ComObjectInstanceRef < Index
+
+  # Node
+  def coir__com_object_ref
+    n = reference
+    n.table.name == "EtsComObjectRef" ? n : nil
+  end
+
+  # Node
+  def coir__com_object
+    n = reference.reference
+    n.table.name == "EtsComObject" ? n : nil
+  end
 
 
+  # Array of Nodes
+  def coir__send_receive
+
+    children_count = children.length
+
+    # c = children
+    if children_count == 1
+      n = children.first.children
+      ["EtsSend","EtsReceive"].include?(n.first.table.name) ? n : []
+    elsif children_count > 1
+      binding.pry
+    else
+      []
+    end
+  end
+# end
+#
+# class ComObjectRef < Index
+  # Node
+  def cor__com_object
+    n = reference
+    n.table.name == "EtsComObject" ? n : nil
+  end
+
+  def cor__objectnum
+    cor__com_object.co__number
+  end
+# end
+#
+# class ComObject < Index
+
+  def co__number
+    table.where(idx: @idx).pluck(:Number).first if table.column?("Number")
+  end
 
 end
-
-
-#
-#
-#
-#
-#
-#
-#
-#
-# module EtsDeviceInstanceModule
-#
-#
-#   # Array of subclass of Nodes
-#   def com_object_instance_ref
-#     coirefs = children.select{|x| x.xtype=="EtsComObjectInstanceRefs"}
-#     if coirefs.length == 1
-#       c = coirefs.first.children
-#       c.first.xtype == "EtsComObjectInstanceRef" ? c : []
-#     elsif coirefs.length == 0
-#       []
-#     else
-#       binding.pry   #DBG, should not happen
-#     end
-#   end
-# end
-#
-# module EtsComObjectInstanceRefModule
-#
-#   # Node
-#   def com_object_ref
-#     n = reference
-#     n.xtype == "EtsComObjectRef" ? n : nil
-#   end
-#
-#   # Node
-#   def com_object
-#     n = reference.reference
-#     n.xtype == "EtsComObject" ? n : nil
-#   end
-#
-#   # Array of Nodes
-#   def send_receive
-#     # binding.pry
-#
-#     children_count = children.size
-#
-#     # c = children
-#     if children_count == 1
-#       n = children.first.children
-#       ["EtsSend","EtsReceive"].include?(n.first.xtype) ? n : []
-#     elsif children_count > 1
-#       binding.pry
-#     else
-#       []
-#     end
-#   end
-# end
-#
-# module EtsComObjectRefModule
-#   # Node
-#   def com_object
-#     n = reference
-#     n.xtype == "EtsComObject" ? n : nil
-#   end
-#
-#

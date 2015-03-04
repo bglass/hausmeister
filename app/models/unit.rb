@@ -15,37 +15,35 @@ class Unit
       puts device.summary
       channel = {}
 
-      channel = device_comobjects(device)
+      channel = find_channels(device)
 
     end
   end
 
 
-  def self.device_comobjects(index)
+  def self.find_channels(index)
     channel = {}
-    binding.pry
-    coirs = index.com_object_instance_ref
+    coirs = index.di__com_object_instance_ref
     coirs.each do |coir|
 
-      cor = coir.com_object_ref
-      co  = cor.com_object
+      cor = coir.coir__com_object_ref
+      co  = cor.cor__com_object
 
       d = {}
       channel[cor.name] ||= []
 
-      d[:Function]  = cor.function
-      d[:objectnum] = cor.objectnum
+      d[:Function]  = cor.function_text
+      d[:objectnum] = cor.cor__objectnum
 
-      connector = coir.send_receive
+      connector = coir.coir__send_receive
 
       connector.each do |sr|
-        srtype = ( sr.xtype == "EtsReceive" ? "(Rx)" : "" )
-        d[sr.ets_group_address.address] = "#{sr.ets_group_address.Name} #{srtype}"
+    # binding.pry
+        srtype = ( sr.table.name == "EtsReceive" ? "(Rx)" : "" )
+        d[sr.links.first.address] = "#{sr.links.first.name} #{srtype}"
       end
       channel[cor.name] << d
     end
     channel.sort_by{|c,d| c}
   end
-
-
 end
