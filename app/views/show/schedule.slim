@@ -1,0 +1,7 @@
+h2 = @title
+
+table
+  - Schedule.agenda.each do |rule|
+    tr
+      td = rule.class.name
+      td = rule.next
