@@ -5,6 +5,10 @@ class IndexArray
     @index = indices
   end
 
+  def self.get(table, record, column)
+    new(table.where(record).pluck(column))
+  end
+
   # (block.class)
   def each(&block)
     @index.each do |index|

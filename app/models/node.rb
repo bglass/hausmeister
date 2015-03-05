@@ -1,6 +1,3 @@
-include Record
-
-
 class Node < ActiveRecord::Base
   self.abstract_class = true
 

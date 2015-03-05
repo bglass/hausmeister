@@ -9,6 +9,10 @@ class Schedule
     @@agenda = []
   end
 
+  def self.agenda
+    @@agenda
+  end
+
   def waiting_period
     w = @@agenda[0].next - Time.now
     if w > 0

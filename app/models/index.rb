@@ -11,10 +11,8 @@ class Index
   def node
     table if !@table
     if !@node
-      record do #DBG
-        n = @table.send "where", "idx=?", @idx
+        n = @table.send "where", {idx: @idx}
         n.length == 0 ? nil : @node = n.first
-      end
     else
       @node
     end
@@ -22,27 +20,36 @@ class Index
 
   def table
     if !@table
-      record do #DBG
         type_id = Tree.where(b_id: @idx).pluck(:b_type).first
         type_id = 0 unless type_id
         @table  = Nodetype.nclass(type_id)
-      end
     else
       @table
     end
   end
 
+  #  DO NOT use @node and @table below this line.
+  #  Use caching accessors node and table instead.
+
+
+  # String
+  def value(column)
+    table.where(idx: @idx).pluck(column).first if table.column?(column)
+  end
+
+  # Index
+  def get(column)
+    Index.new( table.where(idx: @idx).pluck(column).first)
+  end
+
+  # String
   def parent
-    record do #DBG
-      Index.new( table.where(idx: @idx).pluck(:pid).first )
-    end #record DBG
+    get(:pid)
   end
 
   # Array of subclass of Node
   def children()
-    record do #DBG
-      IndexArray.new( Tree.where(a_id: self.idx).pluck(:b_id) )
-    end #record DBG
+      IndexArray.get( Tree, {a_id: self.idx}, :b_id)
   end
 
   # Trueclass
@@ -50,39 +57,32 @@ class Index
 
   # Index
   def find_relation(relation,name=nil)
-    record do #DBG
       x = relation.where(a_id: @idx)  # TODO
-      if relation.name == "Reference"
+      if relation == Reference
         k = x.first
       else
         k = x.select{|r| name == Nodetype.ntype(r.b_type).underscore }.first
       end
       Index.new(k.b_id)
-    end #record DBG
   end
 
   # Subclass of Node
   def reference
-    find_relation(Object.const_get("Reference"))
+    # find_relation(Object.const_get("Reference"))
+    find_relation(Reference)
   end
 
   # IndexArray
   def referers
-    record do #DBG
-      IndexArray.new(Reference.where(b_id: idx).pluck(:a_id))
-    end #record DBG
+      IndexArray.get(Reference, {b_id: @idx}, :a_id)
   end
 
   def links
-    record do #DBG
-      IndexArray.new(Link.where(a_id: @idx).pluck(:b_id))
-    end #record DBG
+      IndexArray.get(Link, {a_id: @idx}, :b_id)
   end
 
   def backlinks
-    record do #DBG
-      IndexArray.new(Link.where(b_id: @idx).pluck(:a_id))
-    end #record DBG
+      IndexArray.get(Link, {b_id: @idx}, :a_id)
   end
 
   # Trueclass
@@ -94,8 +94,9 @@ class Index
   def has_reference?
     # binding.pry
     if table.column?("RefId")
-      refid = table.where(idx: @idx).pluck(:RefId)
-      refid.length > 0
+      # refid = table.where(idx: @idx).pluck(:RefId)
+      # refid.length > 0
+      value("RefId").length > 0
     else
       nil
     end
@@ -126,32 +127,30 @@ class Index
     fields = ["Type", "Name", "Text"] & table.column_names
     if fields.length > 0
       text = table.where(idx: @idx).pluck(*fields).compact
-      # binding.pry
       text.reject!(&:empty?) if text
     end
     text ||= []
-    text.unshift @table.name.gsub(/\AEts/,'').underscore.humanize
+    text.unshift table.name.gsub(/\AEts/,'').underscore.humanize
     text.join(" : ")
   end
 
-  # String
   def name
-    table.where(idx: @idx).pluck(:Name).first if table.column?("Name")
+    value("Name")
   end
 
   # String
   def text
-    table.where(idx: @idx).pluck(:Text).first if table.column?("Text")
+    value("Text")
   end
 
   # String
   def function_text
-    table.where(idx: @idx).pluck(:FunctionText).first if table.column?("FunctionText")
+    value("FunctionText")
   end
 
   # String
   def address
-    table.where(idx: @idx).pluck(:Address).first if table.column?("Address")
+    value("Address")
   end
 
   # Hash {column => value}
@@ -164,10 +163,10 @@ class Index
 # class DeviceInstance < Index
 
   def di__com_object_instance_ref
-    coirefs = children.select{|x| x.table.name == "EtsComObjectInstanceRefs"}
+    coirefs = children.select{|x| x.table == EtsComObjectInstanceRefs}
     if coirefs.length == 1
       c = coirefs.first.children
-      c.first.table.name == "EtsComObjectInstanceRef" ? c : []
+      c.first.table == EtsComObjectInstanceRef ? c : []
     elsif coirefs.length == 0
       []
     else
@@ -181,13 +180,13 @@ class Index
   # Node
   def coir__com_object_ref
     n = reference
-    n.table.name == "EtsComObjectRef" ? n : nil
+    n.table == EtsComObjectRef ? n : nil
   end
 
   # Node
   def coir__com_object
     n = reference.reference
-    n.table.name == "EtsComObject" ? n : nil
+    n.table == EtsComObject ? n : nil
   end
 
 
@@ -199,7 +198,7 @@ class Index
     # c = children
     if children_count == 1
       n = children.first.children
-      ["EtsSend","EtsReceive"].include?(n.first.table.name) ? n : []
+      [EtsSend, EtsReceive].include?(n.first.table) ? n : []
     elsif children_count > 1
       binding.pry
     else
@@ -212,7 +211,7 @@ class Index
   # Node
   def cor__com_object
     n = reference
-    n.table.name == "EtsComObject" ? n : nil
+    n.table == EtsComObject ? n : nil
   end
 
   def cor__objectnum
@@ -223,7 +222,7 @@ class Index
 # class ComObject < Index
 
   def co__number
-    table.where(idx: @idx).pluck(:Number).first if table.column?("Number")
+    value("Number")
   end
 
 end

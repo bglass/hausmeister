@@ -160,7 +160,8 @@ class Propagate < Rule
     @next   = Time.now
     @switch = true
 
-    items.each   { |item|   item.dependants << self }   # hook this rule to its input items
+    # TODO
+    # items.each   { |item|   item.dependants << self }   # hook this rule to its input items
 
     #code.call    # init should happen somewhere else
   end

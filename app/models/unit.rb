@@ -39,11 +39,19 @@ class Unit
 
       connector.each do |sr|
     # binding.pry
-        srtype = ( sr.table.name == "EtsReceive" ? "(Rx)" : "" )
+        srtype = ( sr.table == EtsReceive ? "(Rx)" : "" )
         d[sr.links.first.address] = "#{sr.links.first.name} #{srtype}"
       end
       channel[cor.name] << d
     end
     channel.sort_by{|c,d| c}
   end
+
+  # Array of String
+  def self.group_address_names
+    Nodetype.find_type("EtsGroupAddress").map {|ga| ga.value("Name") }
+  end
+
+
+
 end

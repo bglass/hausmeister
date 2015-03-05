@@ -2,72 +2,71 @@
 
 class Usercode
 
+  def ga_known?(arg)
+    @ga_names.include? arg
+  end
+
+
+  def ga_set(gname,value)
+    #TBD
+    puts "Setting #{gname} to #{value}."
+  end
+
+  def ga_get(gname)
+    #TBD
+    puts "Getting #{gname}."
+  end
+
+  def ga_obj(gname)
+    #TBD
+    puts "Passing #{gname} object."
+  end
+
+  def usercode_preprocess!(code)
+    symbol = ":"
+
+    methods = "(process)"     # methods where ga is expected as object
+
+    gastring = '('+symbol+'([\w\d]+)|<([\w\d\s\/]+)>)'
+    reg_set  = /#{gastring}\s*=/
+    reg_get  = /#{gastring}/
+    reg_obj  = /[:<]([\w\d\s\/]+)>*/
+
+    identifier = '[\w\d:<>\s]+'
+    margs = /#{methods}\s*\((#{identifier}(,#{identifier})*)\)/
+
+    code.gsub!(margs) do |m1|
+      mname     = $1
+      argstring = $2
+      subst = argstring.gsub(reg_obj) do |m2|
+        ga = $1
+        ga_known?(ga) ? "self.ga_obj('#{ga}')" : m2
+      end
+      "#{mname}(#{subst})"
+    end
+
+    code.gsub!(reg_set) do |m|
+      ga_known?($2) ? "self.ga_set '#{$2}'," : m
+    end
+
+    code.gsub!(reg_get) do |m|
+      ga_known?($2) ? "self.ga_get('#{$2}')" : m
+    end
+
+    code
+  end
 
   def initialize
-    read
-    @item  = {}
-    ObjectSpace.each_object(Item).each do |itm|
-      @item[itm.name] = itm
+    @ga_names = Unit.group_address_names
+    fname = Dir.glob("local/logic/**/*.rb")
+
+    fname.each do |fn|
+      puts Dir.pwd+'/'+fn
+      code = File.read(fn)
+      usercode_preprocess!(code)
+      instance_eval code, fn
     end
   end
-
-  def read
-    methods = "(process)"                   # methods expecting objects rather than values:
-
-    itm = "[a-zA-Z]\\w+"
-
-
-    @usercode = File.read(ENV['userfile']).split(/\r?\n|\r/)
-    @usercode.map! do |line|
-      if /^\s*\b#{methods}\b/ =~ line
-        # group symbol in argument list -> give object
-        line.gsub(/#{ENV['group-prefix']}(#{itm})/,'@item["\1"]')
-        # group symbol followed by '.' (and presumably a method)
-      elsif /#{ENV['group-prefix']}(\w+)\./ =~ line
-        line.gsub(/#{ENV['group-prefix']}(#{itm})/,'@item["\1"]')
-      else
-        # others: use value for assignements
-        line.gsub(/#{ENV['group-prefix']}(#{itm})/,'@item["\1"].value')
-      end
-    end
-  end
-
-
-  def eval
-    instance_eval @usercode.join("\n"), ENV['userfile']
-#require 'pry' #dbg
-#binding.pry   #dbg
-end
-
-  def show
-    puts @usercode
-  end
-
-
-
-  #######################################################
-  #  item access
-  #######################################################
-
-  def self.create_item_access
-
-    puts "Item Access"
-
-    Item.all_names.each do |name|
-
-#      puts "Defining #{name}."   # DBG
-
-      define_method name do
-        Item.by_name(name).value
-      end
-
-      define_method name+'=' do |value|
-        Item.by_name(name).value = value
-      end
-
-    end
-  end
-
 
 
   #######################################################
@@ -127,4 +126,5 @@ end
     # add to task list
     # forward changes
   end
+
 end

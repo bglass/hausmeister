@@ -7,9 +7,7 @@ class Nodetype < ActiveRecord::Base
   # String
 
   def self.ntype(type_id)
-    record do #DBG
       where(idx: type_id).pluck(:name).first
-    end #record DBG
   end
 
   # Class
