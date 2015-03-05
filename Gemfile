@@ -56,3 +56,8 @@ gem 'mysql'
 
 gem 'pry-rescue'
 gem 'pry-stack_explorer'
+
+gem 'padrino-websockets'
+gem 'oj'
+# gem 'faye-websocket'
+gem 'spider-gazelle'

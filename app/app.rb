@@ -8,8 +8,7 @@ module Knxbrowse
 
     enable :sessions
 
-
-
+    register Padrino::WebSockets
 
 
 

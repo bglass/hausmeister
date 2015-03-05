@@ -1,4 +1,3 @@
-# RSPEC_TBD
 module Knxbrowse
   class App < Padrino::Application
 
@@ -34,7 +33,7 @@ module Knxbrowse
         get :bus , :map => '/bus' do
       @title = "Bus Interact"
       @menu = menu
-      render 'show/default'
+      render 'show/bus'
     end
     get :ets do
       @title = "ETS Project Browser"
@@ -100,5 +99,15 @@ module Knxbrowse
       @menu = menu
       render 'show/timer'
     end
+
+    websocket :channel do
+      on :ping do |message|
+        send_message(:ping, session['websocket_user'], {pong: true, data: message})
+        broadcast(:ping, {pong: true, data: message, broadcast: true})
+      end
+    end
+
+
+
   end
 end
