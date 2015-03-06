@@ -1,9 +1,10 @@
-var wsocks = function(canvas,size) {
+var wsocks = function(message) {
 
+  var connection = new WebSocket('ws://localhost:3000/channel');
 
   connection.onopen = function(message) {
     console.log('connected to channel');
-    connection.send(JSON.stringify({event: 'ping', some: 'data'}));
+    connection.send(JSON.stringify({event: 'ping', some: 'data from client'}));
   }
 
   connection.onmessage = function(message) {

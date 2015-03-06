@@ -37,7 +37,7 @@ gem 'padrino', '0.12.4'
 gem 'padrino-sprockets', :require => ['padrino/sprockets'],
   :git => 'https://github.com/nightsailer/padrino-sprockets.git'
 
-gem 'uglifier', '2.1.1'
+# gem 'uglifier', '2.1.1'
 gem 'yui-compressor', '0.9.6'
 
 gem 'json'

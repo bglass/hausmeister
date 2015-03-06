@@ -102,8 +102,8 @@ module Knxbrowse
 
     websocket :channel do
       on :ping do |message|
-        send_message(:ping, session['websocket_user'], {pong: true, data: message})
-        broadcast(:ping, {pong: true, data: message, broadcast: true})
+        send_message(:channel, session['websocket_user'], {pong: true, data: message})
+        broadcast(:channel, {pong: true, data: message, broadcast: true})
       end
     end
 
