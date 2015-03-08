@@ -205,6 +205,13 @@ class Index
       []
     end
   end
+
+  def coir__dpst
+    dpst_id =  EtsComObjectInstanceRef.where(idx: @idx).pluck(:DataPointType).first
+    dpst_id ?  Index.new( EtsDatapointSubtype.where(Id: dpst_id).pluck(:idx).first) : nil
+  end
+
+
 # end
 #
 # class ComObjectRef < Index

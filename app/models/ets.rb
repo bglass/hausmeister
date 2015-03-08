@@ -12,6 +12,12 @@ module Ets
       end
       )
     end
+
+  end
+
+  def self.initialize_tables
+    Groupaddress.import
+    Device.import
   end
 end
 
@@ -116,6 +122,12 @@ module EtsComObjectInstanceRefModule
       []
     end
   end
+
+  
+
+
+
+
 end
 
 module EtsComObjectRefModule
@@ -137,6 +149,7 @@ module EtsComObjectRefModule
 end
 
 module EtsGroupAddressModule
+
   def address
     super('/')
   end

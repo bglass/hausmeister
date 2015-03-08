@@ -6,11 +6,41 @@ module Knxbrowse
     register Padrino::Sprockets
     sprockets :minify => (Padrino.env == :production)
 
-    enable :sessions
 
     register Padrino::WebSockets
+    enable :sessions
 
 
+
+    # Thread.new do
+    #   IO.popen('ping localhost') do |io|
+    #     io.each do |line|
+    #       if Padrino::WebSockets::SpiderGazelle::EventManager.class_variable_defined? :@@connections
+    #         Padrino::WebSockets::SpiderGazelle::EventManager.broadcast(:vbm, line.strip)
+    #       end
+    #     end
+    #   end
+    # end
+
+
+
+    websocket :channel do
+      # binding.pry
+      on :ping do |message|
+        send_message(:channel, session['websocket_user'], {pong: true, data: message})
+        broadcast(:channel, {pong: true, data: message, broadcast: true})
+      end
+    end
+
+
+    websocket :vbm do
+      # binding.pry
+      on :ping do |message|
+        send_message(:vbm, session['websocket_user'], {pong: true, data: message})
+        broadcast(:vbm, {pong: true, data: message, broadcast: true})
+      end
+
+    end
 
 
     ##
