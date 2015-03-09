@@ -3,36 +3,35 @@
 # require_relative 'knx_protocol'
 
 
-
-
-
 class KNX
-
-
 
   @transmit_buffer = []      # TBC
   @receive_buffer  = []      # TBC
   @cache           = {}      # TBC
 
-  def initialize
-    (@@knx, @@vbm, @@knxbuf) = open
+  def self.open
+    @@knx = EIBConnection.new()
+
+    begin
+      @@knx.EIBSocketURL(ENV['URL_eibd'])
+    rescue
+      puts "ERROR: Cannot open KNX connection with #{ENV['URL_eibd']}!"
+      @@knx = nil
+    end
+
+    begin
+      @@vbm = @@knx ? @@knx.EIBOpenVBusmonitor() : nil
+    rescue
+      puts "ERROR: cannot open KNX bus monitor!"
+    end
+
+    @@knxbuf = EIBBuffer.new()
+    @@knx
   end
 
-  def self.ga_lut
-    @@ga_lut
-  end
 
-
-  def open
-    knx = EIBConnection.new()
-    knx.EIBSocketURL(ENV['URL_eibd'])
-    vbm = knx.EIBOpenVBusmonitor()
-    knxbuf = EIBBuffer.new()
-    return knx, vbm, knxbuf
-  end
-
-  def close(knx)
-    knx.EIBClose
+  def close
+    self.EIBClose
   end
 
   def value?(group)

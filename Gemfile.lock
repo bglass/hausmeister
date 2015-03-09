@@ -1,17 +1,4 @@
 GIT
-  remote: git://github.com/cotag/uv-rays.git
-  revision: 883b9d56ea5b9b72b9a2f5a542e42526e7c1937d
-  specs:
-    uv-rays (1.0.6)
-      addressable
-      bisect
-      cookiejar
-      http-parser (>= 1.0.4)
-      ipaddress
-      libuv (>= 0.11.20)
-      tzinfo
-
-GIT
   remote: https://github.com/nightsailer/padrino-sprockets.git
   revision: ae18862677fe8a6fe36c85dbc5b016ed919421ba
   specs:
@@ -189,6 +176,14 @@ GEM
       thread_safe (~> 0.1)
     url_mount (0.2.1)
       rack
+    uv-rays (1.0.7)
+      addressable
+      bisect
+      cookiejar
+      http-parser (>= 1.0.4)
+      ipaddress
+      libuv (>= 0.11.20)
+      tzinfo
     websocket-driver (0.5.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -221,5 +216,5 @@ DEPENDENCIES
   rubyzip
   slim
   spider-gazelle
-  uv-rays!
+  uv-rays
   yui-compressor (= 0.9.6)

@@ -62,6 +62,6 @@ gem 'oj'
 # gem 'faye-websocket'
 
 gem 'spider-gazelle'
-gem 'uv-rays', github: 'cotag/uv-rays'
+gem 'uv-rays' # , github: 'cotag/uv-rays'
 
 gem 'hex_string'
