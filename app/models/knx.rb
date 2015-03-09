@@ -15,14 +15,14 @@ class KNX
     begin
       @@knx.EIBSocketURL(ENV['URL_eibd'])
     rescue
-      puts "ERROR: Cannot open KNX connection with #{ENV['URL_eibd']}!"
+      puts "ERROR: Cannot open KNX connection with #{ENV['URL_eibd']}!".colored.red_bold
       @@knx = nil
     end
 
     begin
       @@vbm = @@knx ? @@knx.EIBOpenVBusmonitor() : nil
     rescue
-      puts "ERROR: cannot open KNX bus monitor!"
+      puts "ERROR: cannot open KNX bus monitor!".colored.red_bold
     end
 
     @@knxbuf = EIBBuffer.new()

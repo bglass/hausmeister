@@ -57,11 +57,11 @@ module Knxbrowse
       @menu     = menu
       # @node = Node.find_xid(params[:id].to_i)
       @nid = Index.new(params[:id].to_i)
-      begin
-        render :"node/#{Node.ntype(xid)}"
-      rescue
+      # begin
+        # render :"node/#{Node.ntype(xid)}"
+      # rescue
         render :'node/node'
-      end
+      # end
     end
     get :raw, :with => :id do
       @path     = :raw

@@ -65,3 +65,5 @@ gem 'spider-gazelle'
 gem 'uv-rays' # , github: 'cotag/uv-rays'
 
 gem 'hex_string'
+
+gem 'smart_colored'
