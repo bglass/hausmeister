@@ -22,9 +22,9 @@ usercode = Usercode.new
 puts "Connecting KNX..."
 knx = KNX.open
 
-ehandle = Thread.new {  schedule.event_handler  }
-khandle = Thread.new {  knx.event_handler       }   if knx
-thandle = Thread.new {  task.task_handler       }
+# ehandle = Thread.new {  schedule.event_handler  }
+# khandle = Thread.new {  knx.event_handler       }   if knx
+# thandle = Thread.new {  task.task_handler       }
 
 
 # binding.pry

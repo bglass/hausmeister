@@ -20,9 +20,13 @@ class Index
 
   def table
     if !@table
+      begin
         type_id = Tree.where(b_id: @idx).pluck(:b_type).first
         type_id = 0 unless type_id
         @table  = Nodetype.nclass(type_id)
+      rescue
+        binding.pry
+      end
     else
       @table
     end
